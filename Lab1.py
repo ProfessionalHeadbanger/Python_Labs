@@ -1,6 +1,9 @@
 import random
 import time
 import threading
+from threading import Thread
+
+result6 = 1
 
 
 def task1():
@@ -18,11 +21,11 @@ def task1():
     print("Хорош, ты угадал, загаданное число было", number, "\nЧисло попыток:", take)
 
 
-def task2(n):
-    if n == 1:
-        return n
+def task2(left, right):
+    if right == left:
+        return right
     else:
-        return n*task2(n-1)
+        return right * task2(left, right - 1)
 
 
 def task3(mas):
@@ -31,7 +34,7 @@ def task3(mas):
     for i in mas:
         summ += i
         number += 1
-    print("Среднее массива:", summ/number)
+    print("Среднее массива:", summ / number)
 
 
 def task4(a, b):
@@ -46,8 +49,20 @@ def task5(function):
     print("Факториал от числа", num, "был посчитан за", end_time - start_time, "секунд и равен", result)
 
 
-def task6():
+def task6_start(left, right):
+    global result6
+    result6 *= task2(left, right)
 
+
+def task6():
+    num = int(input("Вычислить факториал от числа: "))
+    t1 = threading.Thread(target=task6_start, args=[num // 2 + 1, num])
+    t2 = threading.Thread(target=task6_start, args=[1, num // 2])
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+    print(result6)
 
 
 restart = True
@@ -59,7 +74,7 @@ while (restart):
         task1()
     elif menu == 2:
         num = int(input("Вычислить факториал от числа: "))
-        task2(num)
+        print(task2(1, num))
     elif menu == 3:
         mas = []
         count = int(input("Введите количество чисел в массиве: "))
