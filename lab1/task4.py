@@ -5,9 +5,12 @@ def calculate_add(a):
 
 
 def add_input():
-    try:
-        a = float(input("Первое число: "))
-        b = float(input("Второе число: "))
-        print(f'add({a})({b}) = {calculate_add(a)(b)}')
-    except ValueError:
-        print("Некорректное значение")
+    is_allright = False
+    while not is_allright:
+        try:
+            a = float(input("Первое число: "))
+            b = float(input("Второе число: "))
+            print(f'add({a})({b}) = {calculate_add(a)(b)}')
+            is_allright = True
+        except ValueError:
+            print("Некорректное значение")

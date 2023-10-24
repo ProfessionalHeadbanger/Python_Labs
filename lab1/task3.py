@@ -9,14 +9,24 @@ def calculate_avg(number_array):
 
 def array_input():
     number_array = []
-    try:
-        size = int(input("Введите количество чисел в массиве: "))
-        if size < 0:
-            raise ValueError
-        else:
-            print("Введите массив чисел: ")
-            for i in range(size):
-                number_array.append(float(input()))
-            print("Среднее массива:", calculate_avg(number_array))
-    except ValueError:
-        print("Некорректное значение")
+    is_allright = False
+    while not is_allright:
+        try:
+            size = int(input("Введите количество чисел в массиве: "))
+            if size <= 0:
+                raise ValueError
+            else:
+                print("Введите массив чисел: ")
+                for i in range(size):
+                    is_correct = False
+                    while not is_correct:
+                        try:
+                            number = float(input())
+                            number_array.append(number)
+                            is_correct = True
+                        except ValueError:
+                            print("Некорректное значение элемента массива")
+                print("Среднее массива:", calculate_avg(number_array))
+                is_allright = True
+        except ValueError:
+            print("Некорректное значение")

@@ -1,24 +1,18 @@
 import threading
 import task2
+from task5 import time_decorator
 
 
 result = []
 
 
 def start_parallel(left, right):
-    result.append(task2.calculate_fac_time(left, right))
+    result.append(task2.calculate_fac(left, right))
 
 
-def divide_parallel():
+@time_decorator
+def divide_parallel(number, thread_number):
     try:
-        number = int(input("Высчитать факториал от числа: "))
-        if number < 0:
-            raise ValueError
-        thread_number = int(input("Количество потоков: "))
-        if thread_number < 0:
-            raise ValueError
-        if thread_number > number:
-            raise ValueError
         parts_size = number//thread_number
         threads = []
         for i in range(0, thread_number - 1):
@@ -34,6 +28,26 @@ def divide_parallel():
         for part in result:
             global_result *= part
         result.clear()
-        print(global_result)
+        return global_result
     except ValueError:
         print("Некорректное значение")
+
+
+def input_parallel():
+    is_allright = False
+    while not is_allright:
+        try:
+            number = int(input("Высчитать факториал от числа: "))
+            if number < 0:
+                raise ValueError
+            thread_number = int(input("Количество потоков: "))
+            if thread_number <= 1:
+                raise ValueError
+            if thread_number > number:
+                raise ValueError
+            global_result, execution_time = divide_parallel(number, thread_number)
+            print(global_result)
+            print(f"Время выполнения: {execution_time} секунд")
+            is_allright = True
+        except ValueError:
+            print("Некорректное значение")
