@@ -20,7 +20,7 @@ while restart:
         elif menu == 4:
             task4.add_input()
         elif menu == 5:
-            task6.divide_parallel()
+            task6.input_parallel()
         elif menu == 6:
             restart = False
         else:
