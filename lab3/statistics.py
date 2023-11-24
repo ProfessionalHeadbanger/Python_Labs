@@ -21,7 +21,7 @@ def read_file(file_path):
 def compute_stats(content):
     if content is not None:
         num_characters = len(content)
-        words = re.findall(r'\b\w+(\'\w+)?\b', content.lower())
+        words = re.findall(r"\b(?:\w+['-]?)+\w+\b", content.lower())
         num_words = len(words)
         most_frequent_word = Counter(words).most_common(1)[0][0]
         return most_frequent_word, num_words, num_characters
@@ -42,4 +42,3 @@ if __name__ == "__main__":
         print(f"Самое часто встречающееся слово: {most_frequent_word}")
         print(f"Количество слов: {num_words}")
         print(f"Количество символов: {num_characters}")
-
